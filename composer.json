@@ -1,0 +1,42 @@
+{
+    "name": "tjall/laravel-pagebuilder",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Tjall\\Pagebuilder\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tjalling Feenstra",
+            "email": "hello@tjalling.net"
+        }
+    ],
+    "require-dev": {
+        "illuminate/support": "^12.0",
+        "illuminate/console": "^12.17",
+        "filament/forms": "^3.3",
+        "filament/filament": "^3.3",
+        "illuminate/database": "^12.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Tjall\\Pagebuilder\\PagebuilderServiceProvider"
+            ]
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../laravel-*",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "require": {
+        "spatie/laravel-package-tools": "^1.92"
+    }
+}
