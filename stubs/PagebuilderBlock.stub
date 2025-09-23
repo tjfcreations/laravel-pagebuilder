@@ -1,0 +1,12 @@
+<?php
+namespace {{ namespace }};
+
+use Tjall\Pagebuilder\Support\Block;
+
+class {{ class }} extends Block {
+    public static string $view = '{{ view }}';
+
+    public static string $label = '{{ label }}';
+
+    // Block logic here
+}

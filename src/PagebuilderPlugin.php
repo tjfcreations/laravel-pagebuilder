@@ -1,10 +1,10 @@
 <?php
 
-namespace Tjall\Users;
+namespace Tjall\Pagebuilder;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
-use Tjall\Users\Filament\Resources\UserResource;
+use Tjall\Pagebuilder\Filament\Resources\PageResource;
 
 class PagebuilderPlugin implements Plugin {
     public function getId(): string {
@@ -14,7 +14,7 @@ class PagebuilderPlugin implements Plugin {
     public function register(Panel $panel): void {
         $panel
             ->resources([
-                PageBuilder::class
+                PageResource::class
             ]);
     }
 

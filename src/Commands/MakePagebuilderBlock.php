@@ -1,6 +1,6 @@
 <?php
 
-namespace Tjall\Pagebuilder\Console\Commands;
+namespace Tjall\Pagebuilder\Commands;
 
 use Illuminate\Console\Command;
 use Filament\Support\Commands\Concerns\CanManipulateFiles;
@@ -16,27 +16,30 @@ class MakePagebuilderBlock extends Command
     public function handle()
     {
         $name = $this->argument('name');
-        $blockNamespace = "App\\Pagebuilder\\Blocks";
-        $blockClassPath = "app/Pagebuilder/Blocks/{$name}.php";
-        $stubPath = base_path('src/stubs/pagebuilder-block.stub');
+        $class = $this->argument('name').'Block';
+        $slug = Str::slug(Str::snake($class));
+        $label = Str::ucfirst(str_replace('_', ' ', Str::lower(Str::snake($name))));
+
+        $blockClassPath = "app/Pagebuilder/Blocks/{$class}.php";
+        $view = "pagebuilder.blocks.{$slug}";
+        $namespace = "App\\Pagebuilder\\Blocks";
 
         // Copy stub to app using Filament's method
         $this->copyStubToApp(
-            $stubPath,
+            'PagebuilderBlock',
             $blockClassPath,
             [
-                'namespace' => $blockNamespace,
-                'class' => $name,
+                'namespace' => $namespace,
+                'label' => $label,
+                'class' => $class,
+                'view' => $view,
             ]
         );
 
         // Create blade view using artisan callSilent with snake_case name
-        $snakeName = Str::snake($name);
-        $this->callSilent('make:view', [
-            'name' => "pagebuilder.blocks.{$snakeName}",
-        ]);
+        $this->callSilent('make:view', ['name' => $view]);
 
         $this->info("Block class created: " . base_path($blockClassPath));
-        $this->info("Block view created: " . resource_path("views/pagebuilder/blocks/{$snakeName}.blade.php"));
+        $this->info("Block view created: " . resource_path("views/pagebuilder/blocks/{$slug}.blade.php"));
     }
 }

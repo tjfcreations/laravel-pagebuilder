@@ -1,6 +1,6 @@
 <?php
 
-namespace Tjall\Users\Console\Commands;
+namespace Tjall\Pagebuilder\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\User;

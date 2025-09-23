@@ -10,9 +10,11 @@ return new class extends Migration
     {
         Schema::create('pagebuilder_pages', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->string('path');
             $table->string('type');
-            $table->string('model');
+            $table->string('model')->nullable();
+            $table->json('pagebuilder');
             $table->timestamps();
         });
     }
