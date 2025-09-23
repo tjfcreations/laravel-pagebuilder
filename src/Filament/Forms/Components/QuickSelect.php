@@ -43,13 +43,16 @@
                         })
                         ->default('selected')
                         ->live()
-                        ->required(),
+                        ->required()
+                        ->selectablePlaceholder(false),
                     Select::make('records')
                         ->label(fn() => 'Kies ' . $this->label)
                         ->visible(fn (Get $get) => $get('view') === 'selected')
                         ->options(fn () => $this->model_::query()
                             ->orderBy('created_at', 'desc')
                             ->pluck($this->recordLabel, 'id'))
+                        ->placeholder('Typ om te zoeken...')
+                        ->noSearchResultsMessage(fn() => "Geen {$this->label} gevonden voor deze zoekopdracht.")
                         ->multiple()
                         ->searchable()
                         ->required(),

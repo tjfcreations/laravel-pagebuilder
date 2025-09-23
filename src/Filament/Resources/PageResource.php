@@ -67,11 +67,13 @@ class PageResource extends Resource
                                     ->options(PageTypeEnum::class)
                                     ->default(PageTypeEnum::Static)
                                     ->live()
-                                    ->required(),
+                                    ->required()
+                                    ->selectablePlaceholder(false),
                                 Forms\Components\Select::make('model')
                                     ->label('Model')
                                     ->options(self::getModelOptions())
                                     ->required()
+                                    ->selectablePlaceholder(false)
                             ]),
                     ]),
             ]);
