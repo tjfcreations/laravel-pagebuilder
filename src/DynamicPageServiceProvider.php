@@ -11,19 +11,17 @@ class DynamicPageServiceProvider extends ServiceProvider {
     protected const ROUTES_CACHE_KEY = 'pagebuilder_routes';
 
     public function boot(): void {
-        $this->cacheRoutes();
+        app()->booted(function() {
+            $this->cacheRoutes();
+        });
     }
 
     public function cacheRoutes(): void {
         $this->invalidateRouteCache();
 
-        try {
-            $routes = Cache::rememberForever(static::ROUTES_CACHE_KEY, function () {
-                return Page::all()->map->only(['id', 'path'])->toArray();
-            });
-        } catch(\Exception $e) {
-            // Database is not ready, ignore error
-        }
+        $routes = Cache::rememberForever(static::ROUTES_CACHE_KEY, function () {
+            return Page::all()->map->only(['id', 'path'])->toArray();
+        });
 
         foreach ($routes as $route) {
             Route::get($route['path'], [DynamicPageController::class, 'show'])
