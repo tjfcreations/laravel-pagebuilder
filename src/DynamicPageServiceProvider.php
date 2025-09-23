@@ -17,9 +17,13 @@ class DynamicPageServiceProvider extends ServiceProvider {
     public function cacheRoutes(): void {
         $this->invalidateRouteCache();
 
-        $routes = Cache::rememberForever(static::ROUTES_CACHE_KEY, function () {
-            return Page::all()->map->only(['id', 'path'])->toArray();
-        });
+        try {
+            $routes = Cache::rememberForever(static::ROUTES_CACHE_KEY, function () {
+                return Page::all()->map->only(['id', 'path'])->toArray();
+            });
+        } catch(\Exception $e) {
+            // Database is not ready, ignore error
+        }
 
         foreach ($routes as $route) {
             Route::get($route['path'], [DynamicPageController::class, 'show'])
