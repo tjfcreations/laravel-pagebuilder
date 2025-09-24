@@ -6,6 +6,7 @@ use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Tjall\Pagebuilder\Commands\MakePagebuilderBlock;
 use Tjall\Pagebuilder\Commands\MakePagebuilderShortcode;
+use Tjall\Pagebuilder\ShortcodeProcessor;
 
 class PagebuilderServiceProvider extends PackageServiceProvider {
     public function configurePackage(Package $package): void {
@@ -26,5 +27,7 @@ class PagebuilderServiceProvider extends PackageServiceProvider {
 
     public function packageBooted(): void {
         $this->app->register(DynamicPageServiceProvider::class);
+
+        ShortcodeProcessor::init();
     }
 }

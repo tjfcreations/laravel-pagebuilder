@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 class {{ class }} extends Shortcode {
     public static string $name = '{{ name }}';
 
-    public function resolve(Collection $arguments): string {
+    public function resolve(Collection $arguments, array $data): mixed {
         // logic here
     }
 }

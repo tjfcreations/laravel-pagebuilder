@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\View;
 use stdClass;
 use Tjall\Pagebuilder\Enums\PageTypeEnum;
     use Tjall\Pagebuilder\Support\Block;
+    use Tjall\Pagebuilder\Registry;
 
     class Page extends Model
     {
@@ -59,7 +60,7 @@ use Tjall\Pagebuilder\Enums\PageTypeEnum;
         }
 
         protected function renderBlock(string $type, array $data): string {
-            foreach(Block::all() as $block) {
+            foreach(Registry::blocks() as $block) {
                 if($block->getType() !== $type) continue;
                 
                 return $block->render($data);

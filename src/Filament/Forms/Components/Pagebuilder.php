@@ -4,6 +4,7 @@
     use Filament\Forms\Components\Builder;
     use Tjall\Pagebuilder\Support\Block;
     use Filament\Forms\Form;
+    use Tjall\Pagebuilder\Registry;
 
     class Pagebuilder extends Builder {
         protected function setUp(): void {
@@ -16,12 +17,12 @@
                 ->blocks(function() {
                     $builderBlocks = [];
 
-                    foreach(Block::all() as $block) {
+                    foreach(Registry::blocks() as $block) {
                         $builderBlocks[] = Builder\Block::make($block->getType())
-                            ->label($block->getLabel())
-                            ->icon($block->getIcon())
+                            ->label($block::$label)
+                            ->icon($block::$icon)
                             ->schema(function() use ($block) {
-                                return $block->getBuilderSchema();
+                                return $block->getSchema();
                             });
                     }
 

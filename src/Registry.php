@@ -14,16 +14,22 @@ class Registry
 {
     public static function blocks(): array
     {
-        return self::cache('pagebuilder.blocks', fn () =>
+        return self::getInstances(self::cache('pagebuilder.blocks', fn () =>
             self::discoverAppClasses(Block::class)
-        );
+        ));
     }
 
     public static function shortcodes(): array
     {
-        return self::cache('pagebuilder.shortcodes', fn () =>
+        return self::getInstances(self::cache('pagebuilder.shortcodes', fn () =>
             self::discoverAppClasses(Shortcode::class)
-        );
+        ));
+    }
+
+    public static function getInstances(array $models) {
+        return collect($models)
+            ->map(fn($model) => (new $model()))
+            ->all();
     }
 
     public static function models(): array

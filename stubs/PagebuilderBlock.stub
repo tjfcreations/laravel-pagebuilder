@@ -22,7 +22,7 @@ class {{ class }} extends Block {
         ];
     }
 
-    public function function with(array $data): array {
+    public function with(array $data): array {
         return $data;
     }
 }

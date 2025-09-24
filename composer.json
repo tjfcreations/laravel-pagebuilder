@@ -38,6 +38,7 @@
         }
     ],
     "require": {
-        "spatie/laravel-package-tools": "^1.92"
+        "spatie/laravel-package-tools": "^1.92",
+        "thunderer/shortcode": "^0.7"
     }
 }
