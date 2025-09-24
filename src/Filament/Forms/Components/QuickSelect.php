@@ -10,6 +10,7 @@
     use Filament\Forms\Components\Radio;
     use Filament\Forms\Components\TextInput;
     use Filament\Forms\Get;
+    use Illuminate\Support\Facades\Schema;
     use Illuminate\Database\Eloquent\Collection;
     use Filament\Forms\Components\Hidden;
 
@@ -48,9 +49,24 @@
                     Select::make('records')
                         ->label(fn() => 'Kies ' . $this->label)
                         ->visible(fn (Get $get) => $get('view') === 'selected')
-                        ->options(fn () => $this->model_::query()
-                            ->orderBy('created_at', 'desc')
-                            ->pluck($this->recordLabel, 'id'))
+                        ->options(function() {
+                            $query = $this->model_::query();
+
+                            $table = (new $this->model_())->getTable();
+                            if(Schema::hasColumn($table, 'created_at')) {
+                                $query->orderBy('created_at', 'desc');
+                            }
+
+                            return $query
+                                ->get()
+                                ->map(function($record) {
+                                    return [
+                                        'label' => method_exists($record, 'getLabel') ? $record->getLabel() : $record->id,
+                                        'id' => $record->id
+                                    ];
+                                })
+                                ->pluck('label', 'id');
+                        })
                         ->placeholder('Typ om te zoeken...')
                         ->noSearchResultsMessage(fn() => "Geen {$this->label} gevonden voor deze zoekopdracht.")
                         ->multiple()

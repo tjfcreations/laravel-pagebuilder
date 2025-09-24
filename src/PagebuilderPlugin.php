@@ -5,6 +5,7 @@ namespace Tjall\Pagebuilder;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Tjall\Pagebuilder\Filament\Resources\PageResource;
+use Tjall\Pagebuilder\Filament\Resources\TranslationResource;
 
 class PagebuilderPlugin implements Plugin {
     public function getId(): string {
@@ -14,7 +15,8 @@ class PagebuilderPlugin implements Plugin {
     public function register(Panel $panel): void {
         $panel
             ->resources([
-                PageResource::class
+                PageResource::class,
+                TranslationResource::class
             ]);
     }
 

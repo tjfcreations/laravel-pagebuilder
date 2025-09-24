@@ -17,7 +17,6 @@
     class QuickSelect {
         public string $model;
         public string $label;
-        public string $recordLabel = 'name';
         public ?string $dateAttribute = null;
 
         public static function for(string $model): static {
@@ -34,14 +33,6 @@
          */
         public function label(string $label): static {
             $this->label = $label;
-            return $this;
-        }
-
-        /**
-         * Set the attribute used for record labels.
-         */
-        public function recordLabel(string $recordLabel): static {
-            $this->recordLabel = $recordLabel;
             return $this;
         }
 
@@ -75,7 +66,6 @@
             return Forms\Components\QuickSelect::make()
                 ->model_($this->model)
                 ->label($this->label)
-                ->recordLabel($this->recordLabel)
                 ->dateAttribute($this->dateAttribute);
         }
     }
