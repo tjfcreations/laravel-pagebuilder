@@ -4,6 +4,7 @@
     use Illuminate\Support\Collection;
     use Illuminate\Support\Str;
     use Illuminate\Support\Facades\Blade;
+    use Tjall\Pagebuilder\Registry;
 
     abstract class Block {
         public static string $view;
@@ -14,23 +15,33 @@
          * @return Collection<int, Block>
          */
         public static function all(): Collection {
-            return collect(config('pagebuilder.blocks', []))
+            return collect(Registry::blocks())
                 ->filter(fn($class) => is_subclass_of($class, Block::class))
                 ->map(fn($class) => new $class());
         }
 
+        public function schema(): array {
+            return [];
+        }
+
+        public function with(array $data): array {
+            return $data;
+        }
+
         public function render(array $data = []): string {
-            $data = $this->with($data);
+            $data = $this->getData($data);
 
             return Blade::render(static::$view, $data);
         }
 
-        public function with(array $data): array {
+        public function getData(array $data): array {
             $quickSelect = $this->quickSelect();
             
             if($quickSelect) {
                 $data['records'] = $quickSelect->getRecords($data);
             }
+
+            $data = $this->with($data);
 
             return $data;
         }
@@ -41,10 +52,6 @@
         
         public function quickSelect(): ?QuickSelect {
             return null;
-        }
-
-        public function schema(): array {
-            return [];
         }
 
         public function getBuilderSchema(): array {

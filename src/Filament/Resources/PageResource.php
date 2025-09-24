@@ -17,6 +17,7 @@ use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Section;
 use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Model;
+use Tjall\Pagebuilder\Registry;
 
 class PageResource extends Resource
 {
@@ -90,10 +91,8 @@ class PageResource extends Resource
 
     protected static function getModelOptions(): array
     {
-        $models = config('pagebuilder.models', []);
-
         $options = [];
-        foreach ($models as $model) {
+        foreach (Registry::models() as $model) {
             $options[$model] = class_basename($model);
         }
 

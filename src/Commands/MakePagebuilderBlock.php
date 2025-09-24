@@ -15,19 +15,18 @@ class MakePagebuilderBlock extends Command
 
     public function handle()
     {
-        $name = $this->argument('name');
-        $class = $this->argument('name').'Block';
-        $slug = Str::slug(Str::snake($class));
-        $label = Str::ucfirst(str_replace('_', ' ', Str::lower(Str::snake($name))));
+        $slug = Str::slug($this->argument('name'));
+        $class = Str::pascal($slug).'Block';
+        $label = Str::ucfirst(Str::lower(Str::snake($slug, ' ')));
 
-        $blockClassPath = "app/Pagebuilder/Blocks/{$class}.php";
-        $view = "pagebuilder.blocks.{$slug}";
+        $classPath = "app/Pagebuilder/Blocks/{$class}.php";
         $namespace = "App\\Pagebuilder\\Blocks";
+        $view = "pagebuilder.blocks.{$slug}";
 
         // Copy stub to app using Filament's method
         $this->copyStubToApp(
             'PagebuilderBlock',
-            $blockClassPath,
+            $classPath,
             [
                 'namespace' => $namespace,
                 'label' => $label,
@@ -39,7 +38,7 @@ class MakePagebuilderBlock extends Command
         // Create blade view using artisan callSilent with snake_case name
         $this->callSilent('make:view', ['name' => $view]);
 
-        $this->info("Block class created: " . base_path($blockClassPath));
+        $this->info("Block class created: " . base_path($classPath));
         $this->info("Block view created: " . resource_path("views/pagebuilder/blocks/{$slug}.blade.php"));
     }
 }

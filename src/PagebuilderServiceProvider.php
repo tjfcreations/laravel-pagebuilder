@@ -5,15 +5,16 @@ namespace Tjall\Pagebuilder;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Tjall\Pagebuilder\Commands\MakePagebuilderBlock;
+use Tjall\Pagebuilder\Commands\MakePagebuilderShortcode;
 
 class PagebuilderServiceProvider extends PackageServiceProvider {
     public function configurePackage(Package $package): void {
         $package
             ->name('laravel-pagebuilder')
             ->discoversMigrations()
-            ->hasConfigFile('pagebuilder')
             ->hasCommands([
-                MakePagebuilderBlock::class
+                MakePagebuilderBlock::class,
+                MakePagebuilderShortcode::class
             ]);
     }
 
@@ -25,9 +26,5 @@ class PagebuilderServiceProvider extends PackageServiceProvider {
 
     public function packageBooted(): void {
         $this->app->register(DynamicPageServiceProvider::class);
-    }
-
-    public function getBlocks() {
-        return config('pagebuilder.blocks', []);
     }
 }

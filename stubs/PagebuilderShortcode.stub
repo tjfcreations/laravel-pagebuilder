@@ -1,0 +1,13 @@
+<?php
+namespace {{ namespace }};
+
+use Tjall\Pagebuilder\Support\Shortcode;
+use Illuminate\Support\Collection;
+
+class {{ class }} extends Shortcode {
+    public static string $name = '{{ name }}';
+
+    public function resolve(Collection $arguments): string {
+        // logic here
+    }
+}

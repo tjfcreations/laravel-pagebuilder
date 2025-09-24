@@ -2,11 +2,27 @@
 namespace {{ namespace }};
 
 use Tjall\Pagebuilder\Support\Block;
+use Tjall\Pagebuilder\Support\QuickSelect;
 
 class {{ class }} extends Block {
     public static string $view = '{{ view }}';
 
     public static string $label = '{{ label }}';
 
-    // Block logic here
+    public function quickSelect(): ?QuickSelect {
+        // return QuickSelect::for(MyModel::class)
+        //     ->label('items')
+        //     ->recordLabel('name')
+        //     ->withRecent('created_at');
+    }
+
+    public function schema(): array {
+        return [
+
+        ];
+    }
+
+    public function function with(array $data): array {
+        return $data;
+    }
 }
